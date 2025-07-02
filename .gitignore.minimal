@@ -1,0 +1,14 @@
+# Minimal .gitignore for Tech Adivas project
+
+# Only exclude essential files
+node_modules/
+.env
+.env.local
+.env.production.local
+
+# Optional: exclude logs
+*.log
+
+# Optional: exclude OS files
+.DS_Store
+Thumbs.db 

@@ -1,0 +1,51 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://techadivas.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Disallow admin or private areas (if any)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+
+# Allow important pages
+Allow: /about/
+Allow: /services/
+Allow: /products/
+Allow: /contact/
+Allow: /medoli/
+
+# Block common bot traps
+Disallow: /*?*
+Disallow: /*&*
+Disallow: /search?
+Disallow: /filter?
+
+# Allow social media bots
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Allow Google bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Mobile
+Allow: /
+
+# Allow Bing bots
+User-agent: Bingbot
+Allow: /

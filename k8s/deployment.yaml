@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: techadivas-website
+  labels:
+    app: techadivas-website
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: techadivas-website
+  template:
+    metadata:
+      labels:
+        app: techadivas-website
+    spec:
+      containers:
+      - name: techadivas-website
+        image: gcr.io/PROJECT_ID/techadivas-website:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: techadivas-website-service
+spec:
+  selector:
+    app: techadivas-website
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: techadivas-website-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "techadivas-website-ip"
+    networking.gke.io/managed-certificates: "techadivas-website-cert"
+spec:
+  rules:
+  - host: techadivas.com  # Replace with your domain
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: techadivas-website-service
+            port:
+              number: 80 
